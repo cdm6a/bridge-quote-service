@@ -1,6 +1,7 @@
-module.exports = function(app) {
-  // Install a "/ping" route that returns "pong"
-  app.get('/ping', function(req, res) {
+module.exports = function(server) {
+  var router = server.loopback.Router();
+  router.get('/ping', function(req, res) {
     res.send('pong');
   });
+  server.use(router);
 };
