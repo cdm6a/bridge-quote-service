@@ -3,15 +3,17 @@
   "version": "0.0.0",
   "main": "server/server.js",
   "scripts": {
-    "pretest": "jshint .",
-    "test": "mocha ./test/server/lib/**/*.js"
+    "test": "NODE_ENV=test ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- --ui tdd --reporter spec --timeout 10000 --slow 500 ./test/server/lib/**/*.js",
+    "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
   },
   "dependencies": {
     "bluebird": "^2.3.11",
     "chai": "^1.10.0",
     "chai-as-promised": "^4.1.1",
     "compression": "^1.0.3",
+    "coveralls": "^2.11.2",
     "errorhandler": "^1.1.1",
+    "istanbul": "^0.3.5",
     "lodash": "^2.4.1",
     "loopback": "^2.8.0",
     "loopback-boot": "^2.4.0",
