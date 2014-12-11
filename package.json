@@ -3,15 +3,26 @@
   "version": "0.0.0",
   "main": "server/server.js",
   "scripts": {
-    "pretest": "jshint ."
+    "pretest": "jshint .",
+    "test": "mocha ./test/server/lib/**/*.js"
   },
   "dependencies": {
+    "bluebird": "^2.3.11",
+    "chai": "^1.10.0",
+    "chai-as-promised": "^4.1.1",
     "compression": "^1.0.3",
     "errorhandler": "^1.1.1",
+    "lodash": "^2.4.1",
     "loopback": "^2.8.0",
     "loopback-boot": "^2.4.0",
     "loopback-datasource-juggler": "^2.7.0",
-    "serve-favicon": "^2.0.1"
+    "mocha": "^2.0.1",
+    "ripple-lib": "^0.9.4",
+    "ripple-rest-client": "^1.13.0",
+    "serve-favicon": "^2.0.1",
+    "sinon": "^1.12.1",
+    "validator": "^3.22.2",
+    "winston": "^0.8.3"
   },
   "optionalDependencies": {
     "loopback-explorer": "^1.1.0"
