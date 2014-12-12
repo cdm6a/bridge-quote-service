@@ -3,45 +3,39 @@ var chai               = require('chai');
 var chaiAsPromised     = require('chai-as-promised');
 var sinon              = require('sinon');
 var RippleRestClient   = require('ripple-rest-client');
-var RippleQuote        = require(__dirname + '/../../../../server/lib/quotes/ripple_quote.js');
+var RippleQuoteService = require(__dirname + '/../../../../server/lib/services/ripple_quote_service.js');
 var rippleQuoteFixture = require(__dirname + '/../../../fixtures/ripple_quote.js');
 
 describe('ripple_quote', function() {
 
   chai.use(chaiAsPromised);
 
-  it('.validate() should successfully validate a ripple quote', function(done) {
-    var quote = new RippleQuote(rippleQuoteFixture.valid);
-    quote.validate()
+  it('.validate() should successfully validate a ripple quote request', function(done) {
+    RippleQuoteService.validate(rippleQuoteFixture.valid)
       .then(done)
       .catch(done);
   });
 
   it('.validate() should fail to validate a ripple quote (amount)', function() {
-    var quote = new RippleQuote(rippleQuoteFixture.invalid.destination_amount);
-    return chai.assert.isRejected(quote.validate(), 'Amount is not valid number');
+    return chai.assert.isRejected(RippleQuoteService.validate(rippleQuoteFixture.invalid.destination_amount), 'Amount is not valid number');
   });
 
   it('.validate() should fail to validate a ripple quote (currency)', function() {
-    var quote = new RippleQuote(rippleQuoteFixture.invalid.destination_currency);
-    return chai.assert.isRejected(quote.validate(), 'Currency is not valid');
+    return chai.assert.isRejected(RippleQuoteService.validate(rippleQuoteFixture.invalid.destination_currency), 'Currency is not valid');
   });
 
   it('.validate() should fail to validate a ripple quote (address)', function() {
-    var quote = new RippleQuote(rippleQuoteFixture.invalid.destination_address);
-    return chai.assert.isRejected(quote.validate(), 'Address is not a valid ripple address');
+    return chai.assert.isRejected(RippleQuoteService.validate(rippleQuoteFixture.invalid.destination_address), 'Address is not a valid ripple address');
   });
 
   it('.validate() should fail to validate a ripple quote (issuer)', function() {
-    var quote = new RippleQuote(rippleQuoteFixture.invalid.source_address);
-    return chai.assert.isRejected(quote.validate(), 'Issuer is not a valid ripple address');
+    return chai.assert.isRejected(RippleQuoteService.validate(rippleQuoteFixture.invalid.source_address), 'Issuer is not a valid ripple address');
   });
 
   it('.build() calls ripple-rest with the provided args', function(done) {
     var stub = sinon.stub(RippleRestClient.prototype, 'buildPayment')
       .yields(null, rippleQuoteFixture.ripple_rest_response.valid);
-    var quote = new RippleQuote(rippleQuoteFixture.valid);
-    quote.build()
+    RippleQuoteService.build(rippleQuoteFixture.valid)
       .then(function() {
         chai.assert.ok(stub.withArgs({
           amount: rippleQuoteFixture.valid.destination.amount,
