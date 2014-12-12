@@ -1,6 +1,6 @@
 {
   "name": "bridge-quote-service",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "main": "server/server.js",
   "scripts": {
     "test": "NODE_ENV=test ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- --ui tdd --reporter spec --timeout 10000 --slow 500 ./test/server/lib/**/*.js",
