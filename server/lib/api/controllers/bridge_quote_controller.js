@@ -9,14 +9,12 @@ function getBridgeQuote(request, response, next) {
   }).then(function(bridgeQuote) {
     responseHandler.success(response, bridgeQuote);
   }).error(function(error) {
-    // If it
     if (error.error_type === 'transaction') {
       responseHandler.transactionError(response, null, error);
     } else {
       responseHandler.invalidRequest(response, error.message);
     }
   })
-
 }
 
 module.exports.getBridgeQuote = getBridgeQuote;
